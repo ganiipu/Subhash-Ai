@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Project Portfolio — Subhash Pokhriyal</title>
+    <meta name="description" content="Engineering autonomous ecosystems that eliminate operational friction and transform fragmented data into structured intelligence.">
+    <meta name="author" content="Subhash Pokhriyal">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dark">
+
+    <!-- Background Layer -->
+    <canvas id="neural-canvas" aria-hidden="true"></canvas>
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <header class="nav" role="banner">
+        <nav class="nav__inner" aria-label="Main navigation">
+            <a href="#hero" class="nav__brand" aria-label="Subhash Pokhriyal AI Portfolio - Home">
+                <span class="nav__name">Subhash Pokhriyal</span>
+                <span class="nav__separator">—</span>
+                <span class="nav__tag">AI.Portfolio</span>
+            </a>
+            <div class="nav__links">
+                <a href="#about">About</a>
+                <a href="#systems">Systems</a>
+                <a href="#metrics">Impact</a>
+                <button id="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle theme">
+                    <i data-lucide="moon" class="theme-icon--dark"></i>
+                    <i data-lucide="sun" class="theme-icon--light"></i>
+                </button>
+                <a href="mailto:pokhriyal.ccet@gmail.com" class="nav__cta">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ===== HERO ===== -->
+        <section class="hero" id="hero" aria-label="Introduction">
+            <div class="hero__inner">
+                <div class="hero__badge">
+                    <span class="pulse-dot"></span>
+                    <span>AUTONOMOUS SYSTEMS ONLINE</span>
+                </div>
+
+                <h1 class="hero__title">
+                    <span class="hero__line">AI Project</span>
+                    <span class="hero__line hero__line--accent">
+                        <span id="typewriter"></span><span class="typewriter-cursor">|</span>
+                    </span>
+                </h1>
+
+                <p class="hero__subtitle">Engineering autonomous ecosystems that eliminate operational friction and transform fragmented data into structured intelligence.</p>
+
+                <div class="hero__actions">
+                    <button id="explore-btn" class="btn btn--primary">
+                        <span>Explore 6 Systems</span>
+                        <i data-lucide="arrow-right"></i>
+                    </button>
+                    <a href="#metrics" class="btn btn--ghost">View Impact →</a>
+                </div>
+
+                <div class="hero__stats">
+                    <div class="stat">
+                        <span class="stat__value" data-target="6">0</span>
+                        <span class="stat__label">Systems</span>
+                    </div>
+                    <div class="stat__divider"></div>
+                    <div class="stat">
+                        <span class="stat__value" data-target="85">0</span><span class="stat__suffix">%</span>
+                        <span class="stat__label">Automation</span>
+                    </div>
+                    <div class="stat__divider"></div>
+                    <div class="stat">
+                        <span class="stat__value" data-target="200">0</span><span class="stat__suffix">h</span>
+                        <span class="stat__label">Saved / Week</span>
+                    </div>
+                    <div class="stat__divider"></div>
+                    <div class="stat">
+                        <span class="stat__value" data-target="99">0</span><span class="stat__suffix">%</span>
+                        <span class="stat__label">Uptime</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero__scroll" aria-hidden="true">
+                <div class="scroll-line"></div>
+                <span>Scroll</span>
+            </div>
+        </section>
+
+        <!-- ===== CAPABILITIES ===== -->
+        <section class="capabilities" id="about" aria-label="Capabilities">
+            <div class="capabilities__inner">
+                <div class="capabilities__header">
+                    <span class="section-tag">CAPABILITIES</span>
+                    <h2 class="section-title">What I Build</h2>
+                </div>
+                <div class="capabilities__grid">
+                    <article class="cap-card reveal-card">
+                        <div class="cap-card__icon">
+                            <i data-lucide="activity"></i>
+                        </div>
+                        <h3>Workflow Architecture</h3>
+                        <p>n8n-powered autonomous pipelines that process, decide, and act — no human required.</p>
+                    </article>
+                    <article class="cap-card reveal-card">
+                        <div class="cap-card__icon">
+                            <i data-lucide="brain"></i>
+                        </div>
+                        <h3>LLM Integration</h3>
+                        <p>Embed GPT-4, Claude, and open models directly into real business logic and decision trees.</p>
+                    </article>
+                    <article class="cap-card reveal-card">
+                        <div class="cap-card__icon">
+                            <i data-lucide="bar-chart-3"></i>
+                        </div>
+                        <h3>Impact at Scale</h3>
+                        <p>Every system ships with hard metrics — hours saved, error rates crushed, response times decimated.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SYSTEMS GRID ===== -->
+        <section class="systems" id="systems" aria-label="Deployed Systems">
+            <div class="systems__inner">
+                <div class="section-head">
+                    <span class="section-tag">DEPLOYED SYSTEMS</span>
+                    <h2 class="section-title">Six Intelligence Engines</h2>
+                    <p class="section-desc">Each system was engineered to defeat a specific operational bottleneck. Click to explore the full case study.</p>
+                </div>
+                <div class="systems__grid" id="systems-grid"></div>
+            </div>
+        </section>
+
+        <!-- ===== IMPACT METRICS ===== -->
+        <section class="metrics" id="metrics" aria-label="Impact Metrics">
+            <div class="metrics__inner">
+                <span class="section-tag">AGGREGATE IMPACT</span>
+                <h2 class="section-title">Numbers That Matter</h2>
+                <div class="metrics__grid">
+                    <div class="metric-card reveal-card">
+                        <span class="metric-card__value" data-target="200">0</span><span class="metric-card__suffix">+</span>
+                        <p>Hours Saved Weekly</p>
+                    </div>
+                    <div class="metric-card reveal-card">
+                        <span class="metric-card__value" data-target="6">0</span>
+                        <p>Production Systems</p>
+                    </div>
+                    <div class="metric-card reveal-card">
+                        <span class="metric-card__value" data-target="99">0</span><span class="metric-card__suffix">%</span>
+                        <p>Error Reduction</p>
+                    </div>
+                    <div class="metric-card reveal-card">
+                        <span class="metric-card__value">< 1s</span>
+                        <p>Avg Response Time</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer__inner">
+            <div class="footer__brand">
+                <span class="footer__logo">[AI·PORTFOLIO]</span>
+                <p>Building systems that think for themselves.</p>
+            </div>
+            <div class="footer__links">
+                <a href="https://www.linkedin.com/in/subhash-pokhrial" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="#">GitHub</a>
+                <a href="mailto:pokhriyal.ccet@gmail.com">pokhriyal.ccet@gmail.com</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== PROJECT MODAL ===== -->
+    <div id="project-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal__backdrop"></div>
+        <div class="modal__container">
+            <div class="modal__topbar">
+                <div class="modal__breadcrumb">
+                    <span>AI PORTFOLIO</span>
+                    <span class="modal__breadcrumb-sep">/</span>
+                    <span id="modal-badge" class="modal__breadcrumb-active">SYSTEM</span>
+                </div>
+                <button id="modal-close" aria-label="Close modal">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <div class="modal__body">
+                <div class="modal__hero">
+                    <div class="modal__status">
+                        <span class="pulse-dot pulse-dot--green"></span>
+                        <span>SYSTEM ACTIVE</span>
+                    </div>
+                    <h2 id="modal-title"></h2>
+                    <p id="modal-subtitle" class="modal__subtitle"></p>
+                    <div id="modal-tags" class="modal__tags"></div>
+                </div>
+
+                <div class="modal__image">
+                    <img id="modal-img" src="" alt="System workflow visualization">
+                </div>
+
+                <div class="modal__columns">
+                    <div class="modal__block">
+                        <h4>The Challenge</h4>
+                        <p id="modal-story"></p>
+                    </div>
+                    <div class="modal__block modal__block--accent">
+                        <h4>The Solution</h4>
+                        <p id="modal-intervention"></p>
+                    </div>
+                </div>
+
+                <div class="modal__block">
+                    <h4>Data Pipeline</h4>
+                    <div id="modal-workflow" class="pipeline"></div>
+                </div>
+
+                <div class="modal__block">
+                    <h4>Measured Impact</h4>
+                    <div id="modal-impact" class="impact-list"></div>
+                </div>
+
+                <div class="modal__stack">
+                    <span class="modal__stack-label">STACK</span>
+                    <code id="modal-stack"></code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
