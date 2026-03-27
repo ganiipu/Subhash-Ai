@@ -3,187 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Project Portfolio — Subhash Pokhriyal</title>
+    <title>AI Project Portfolio — Subhash</title>
     <meta name="description" content="Engineering autonomous ecosystems that eliminate operational friction and transform fragmented data into structured intelligence.">
-    <meta name="author" content="Subhash Pokhriyal">
-
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-    <!-- GSAP -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
-
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest" defer></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body data-theme="dark">
+<body>
+    <!-- Cursor Glow Follower -->
+    <div class="cursor-glow" id="cursor-glow"></div>
 
-    <!-- Background Layer -->
-    <canvas id="neural-canvas" aria-hidden="true"></canvas>
-    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+    <!-- Neural Canvas -->
+    <canvas id="neural-canvas"></canvas>
 
-    <!-- ===== NAVIGATION ===== -->
-    <header class="nav" role="banner">
-        <nav class="nav__inner" aria-label="Main navigation">
-            <a href="#hero" class="nav__brand" aria-label="Subhash Pokhriyal AI Portfolio - Home">
-                <span class="nav__name">Subhash Pokhriyal</span>
-                <span class="nav__separator">—</span>
-                <span class="nav__tag">AI.Portfolio</span>
-            </a>
-            <div class="nav__links">
+    <!-- Nav -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <div class="nav-brand">
+                <a href="#hero" class="nav-logo">
+                    <span class="nav-name">Subhash Pokhriyal</span><span class="logo-dash">-AI.</span><span class="logo-portfolio">Portfolio</span>
+                </a>
+            </div>
+            <div class="nav-links">
                 <a href="#about">About</a>
                 <a href="#systems">Systems</a>
                 <a href="#metrics">Impact</a>
-                <button id="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle theme">
-                    <i data-lucide="moon" class="theme-icon--dark"></i>
-                    <i data-lucide="sun" class="theme-icon--light"></i>
+                <a href="mailto:pokhriyal.ccet@gmail.com" class="nav-cta">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+        <div class="hero-inner">
+            <div class="hero-tag">
+                <span class="blink-dot"></span>
+                <span>AUTONOMOUS SYSTEMS ONLINE</span>
+            </div>
+
+            <h1 class="hero-title">
+                <span class="word-line">AI Project</span>
+                <span class="word-line accent-line">
+                    <span id="typewriter"></span><span class="type-cursor">|</span>
+                </span>
+            </h1>
+
+            <p class="hero-sub">Engineering autonomous ecosystems that eliminate operational friction and transform fragmented data into structured intelligence.</p>
+
+            <div class="hero-cta-row">
+                <button id="explore-btn" class="cta-primary">
+                    <span>Explore 6 Systems</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
-                <a href="mailto:pokhriyal.ccet@gmail.com" class="nav__cta">Contact</a>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <!-- ===== HERO ===== -->
-        <section class="hero" id="hero" aria-label="Introduction">
-            <div class="hero__inner">
-                <div class="hero__badge">
-                    <span class="pulse-dot"></span>
-                    <span>AUTONOMOUS SYSTEMS ONLINE</span>
-                </div>
-
-                <h1 class="hero__title">
-                    <span class="hero__line">AI Project</span>
-                    <span class="hero__line hero__line--accent">
-                        <span id="typewriter"></span><span class="typewriter-cursor">|</span>
-                    </span>
-                </h1>
-
-                <p class="hero__subtitle">Engineering autonomous ecosystems that eliminate operational friction and transform fragmented data into structured intelligence.</p>
-
-                <div class="hero__actions">
-                    <button id="explore-btn" class="btn btn--primary">
-                        <span>Explore 6 Systems</span>
-                        <i data-lucide="arrow-right"></i>
-                    </button>
-                    <a href="#metrics" class="btn btn--ghost">View Impact →</a>
-                </div>
-
-                <div class="hero__stats">
-                    <div class="stat">
-                        <span class="stat__value" data-target="6">0</span>
-                        <span class="stat__label">Systems</span>
-                    </div>
-                    <div class="stat__divider"></div>
-                    <div class="stat">
-                        <span class="stat__value" data-target="85">0</span><span class="stat__suffix">%</span>
-                        <span class="stat__label">Automation</span>
-                    </div>
-                    <div class="stat__divider"></div>
-                    <div class="stat">
-                        <span class="stat__value" data-target="200">0</span><span class="stat__suffix">h</span>
-                        <span class="stat__label">Saved / Week</span>
-                    </div>
-                    <div class="stat__divider"></div>
-                    <div class="stat">
-                        <span class="stat__value" data-target="99">0</span><span class="stat__suffix">%</span>
-                        <span class="stat__label">Uptime</span>
-                    </div>
-                </div>
+                <a href="#metrics" class="cta-secondary">View Impact →</a>
             </div>
 
-            <div class="hero__scroll" aria-hidden="true">
-                <div class="scroll-line"></div>
-                <span>Scroll</span>
+            <div class="hero-stats-row">
+                <div class="hstat">
+                    <span class="hstat-num" data-target="6">0</span>
+                    <span class="hstat-lbl">Systems</span>
+                </div>
+                <div class="hstat-div"></div>
+                <div class="hstat">
+                    <span class="hstat-num" data-target="85">0</span><span class="hstat-sfx">%</span>
+                    <span class="hstat-lbl">Automation</span>
+                </div>
+                <div class="hstat-div"></div>
+                <div class="hstat">
+                    <span class="hstat-num" data-target="200">0</span><span class="hstat-sfx">h</span>
+                    <span class="hstat-lbl">Saved / Week</span>
+                </div>
+                <div class="hstat-div"></div>
+                <div class="hstat">
+                    <span class="hstat-num" data-target="99">0</span><span class="hstat-sfx">%</span>
+                    <span class="hstat-lbl">Uptime</span>
+                </div>
             </div>
-        </section>
+        </div>
 
-        <!-- ===== CAPABILITIES ===== -->
-        <section class="capabilities" id="about" aria-label="Capabilities">
-            <div class="capabilities__inner">
-                <div class="capabilities__header">
-                    <span class="section-tag">CAPABILITIES</span>
-                    <h2 class="section-title">What I Build</h2>
-                </div>
-                <div class="capabilities__grid">
-                    <article class="cap-card reveal-card">
-                        <div class="cap-card__icon">
-                            <i data-lucide="activity"></i>
-                        </div>
-                        <h3>Workflow Architecture</h3>
-                        <p>n8n-powered autonomous pipelines that process, decide, and act — no human required.</p>
-                    </article>
-                    <article class="cap-card reveal-card">
-                        <div class="cap-card__icon">
-                            <i data-lucide="brain"></i>
-                        </div>
-                        <h3>LLM Integration</h3>
-                        <p>Embed GPT-4, Claude, and open models directly into real business logic and decision trees.</p>
-                    </article>
-                    <article class="cap-card reveal-card">
-                        <div class="cap-card__icon">
-                            <i data-lucide="bar-chart-3"></i>
-                        </div>
-                        <h3>Impact at Scale</h3>
-                        <p>Every system ships with hard metrics — hours saved, error rates crushed, response times decimated.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
+        <div class="hero-scroll">
+            <div class="scroll-line"></div>
+            <span>Scroll</span>
+        </div>
+    </section>
 
-        <!-- ===== SYSTEMS GRID ===== -->
-        <section class="systems" id="systems" aria-label="Deployed Systems">
-            <div class="systems__inner">
-                <div class="section-head">
-                    <span class="section-tag">DEPLOYED SYSTEMS</span>
-                    <h2 class="section-title">Six Intelligence Engines</h2>
-                    <p class="section-desc">Each system was engineered to defeat a specific operational bottleneck. Click to explore the full case study.</p>
-                </div>
-                <div class="systems__grid" id="systems-grid"></div>
+    <!-- ===== ABOUT STRIP ===== -->
+    <section class="about-strip" id="about">
+        <div class="strip-inner">
+            <div class="strip-cap">
+                <span class="section-label">CAPABILITIES</span>
+                <h2 class="reveal-text">What I Build</h2>
             </div>
-        </section>
+            <div class="strip-cards">
+                <div class="strip-card reveal-card">
+                    <div class="sc-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <h3>Workflow Architecture</h3>
+                    <p>n8n-powered autonomous pipelines that process, decide, and act — no human required.</p>
+                </div>
+                <div class="strip-card reveal-card">
+                    <div class="sc-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 8v4l3 3"/></svg>
+                    </div>
+                    <h3>LLM Integration</h3>
+                    <p>Embed GPT-4, Claude, and open models directly into real business logic and decision trees.</p>
+                </div>
+                <div class="strip-card reveal-card">
+                    <div class="sc-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                    </div>
+                    <h3>Impact at Scale</h3>
+                    <p>Every system ships with hard metrics — hours saved, error rates crushed, response times decimated.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <!-- ===== IMPACT METRICS ===== -->
-        <section class="metrics" id="metrics" aria-label="Impact Metrics">
-            <div class="metrics__inner">
-                <span class="section-tag">AGGREGATE IMPACT</span>
-                <h2 class="section-title">Numbers That Matter</h2>
-                <div class="metrics__grid">
-                    <div class="metric-card reveal-card">
-                        <span class="metric-card__value" data-target="200">0</span><span class="metric-card__suffix">+</span>
-                        <p>Hours Saved Weekly</p>
-                    </div>
-                    <div class="metric-card reveal-card">
-                        <span class="metric-card__value" data-target="6">0</span>
-                        <p>Production Systems</p>
-                    </div>
-                    <div class="metric-card reveal-card">
-                        <span class="metric-card__value" data-target="99">0</span><span class="metric-card__suffix">%</span>
-                        <p>Error Reduction</p>
-                    </div>
-                    <div class="metric-card reveal-card">
-                        <span class="metric-card__value">< 1s</span>
-                        <p>Avg Response Time</p>
-                    </div>
+    <!-- ===== SYSTEMS GRID ===== -->
+    <section class="systems-section" id="systems">
+        <div class="systems-inner">
+            <div class="section-head">
+                <span class="section-label">DEPLOYED SYSTEMS</span>
+                <h2 class="reveal-text">Six Intelligence Engines</h2>
+                <p class="section-sub">Each system was engineered to defeat a specific operational bottleneck. Click to explore the full case study.</p>
+            </div>
+            <div class="systems-grid" id="systems-grid"></div>
+        </div>
+    </section>
+
+    <!-- ===== LLM GRID ===== -->
+    <section class="systems-section" id="llms" style="padding-top: 0;">
+        <div class="systems-inner">
+            <div class="section-head">
+                <span class="section-label">APPLIED RESEARCH</span>
+                <h2 class="reveal-text">Five Applied LLMs</h2>
+                <p class="section-sub">Fine-tuned transformers and foundational models adapted for highly specialized NLP and Vision tasks.</p>
+            </div>
+            <div class="systems-grid" id="llms-grid"></div>
+        </div>
+    </section>
+
+    <!-- ===== IMPACT METRICS ===== -->
+    <section class="metrics-section" id="metrics">
+        <div class="metrics-inner">
+            <span class="section-label">AGGREGATE IMPACT</span>
+            <h2 class="reveal-text">Numbers That Matter</h2>
+            <div class="metrics-grid">
+                <div class="metric-box reveal-card">
+                    <span class="mb-num" data-target="200">0</span><span class="mb-sfx">+</span>
+                    <p>Hours Saved Weekly</p>
+                </div>
+                <div class="metric-box reveal-card">
+                    <span class="mb-num" data-target="6">0</span>
+                    <p>Production Systems</p>
+                </div>
+                <div class="metric-box reveal-card">
+                    <span class="mb-num" data-target="99">0</span><span class="mb-sfx">%</span>
+                    <p>Error Reduction</p>
+                </div>
+                <div class="metric-box reveal-card">
+                    <span class="mb-num">< 1s</span>
+                    <p>Avg Response Time</p>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
     <!-- ===== FOOTER ===== -->
-    <footer class="footer" role="contentinfo">
-        <div class="footer__inner">
-            <div class="footer__brand">
-                <span class="footer__logo">[AI·PORTFOLIO]</span>
+    <footer class="footer">
+        <div class="footer-inner">
+            <div>
+                <span class="nav-logo">AI<span class="logo-dot">·</span>PORTFOLIO</span>
                 <p>Building systems that think for themselves.</p>
             </div>
-            <div class="footer__links">
-                <a href="https://www.linkedin.com/in/subhash-pokhrial" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <div class="footer-links">
+                <a href="https://www.linkedin.com/in/subhash-pokhrial" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="https://huggingface.co/" target="_blank" rel="noopener">HuggingFace</a>
                 <a href="#">GitHub</a>
                 <a href="mailto:pokhriyal.ccet@gmail.com">pokhriyal.ccet@gmail.com</a>
             </div>
@@ -191,64 +190,61 @@
     </footer>
 
     <!-- ===== PROJECT MODAL ===== -->
-    <div id="project-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <div class="modal__backdrop"></div>
-        <div class="modal__container">
-            <div class="modal__topbar">
-                <div class="modal__breadcrumb">
-                    <span>AI PORTFOLIO</span>
-                    <span class="modal__breadcrumb-sep">/</span>
-                    <span id="modal-badge" class="modal__breadcrumb-active">SYSTEM</span>
+    <div id="project-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <div class="modal-bar">
+                <div class="modal-breadcrumb">
+                    <span>AI PORTFOLIO</span> / <span id="modal-badge">SYSTEM</span>
                 </div>
-                <button id="modal-close" aria-label="Close modal">
-                    <i data-lucide="x"></i>
+                <button id="modal-close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
                 </button>
             </div>
-
-            <div class="modal__body">
-                <div class="modal__hero">
-                    <div class="modal__status">
-                        <span class="pulse-dot pulse-dot--green"></span>
+            <div class="modal-body-scroll">
+                <div class="modal-hero-area">
+                    <div class="modal-live-badge">
+                        <span class="blink-dot green"></span>
                         <span>SYSTEM ACTIVE</span>
                     </div>
                     <h2 id="modal-title"></h2>
-                    <p id="modal-subtitle" class="modal__subtitle"></p>
-                    <div id="modal-tags" class="modal__tags"></div>
+                    <p id="modal-subtitle" class="modal-impact-line"></p>
+                    <div id="modal-tags" class="modal-tags"></div>
+                    <a id="modal-live-link" href="#" target="_blank" class="nav-cta" style="display:none; margin-top: 1.5rem; width: fit-content; text-decoration: none; font-size: 0.95rem !important; padding: 0.6rem 1.4rem;">View Live App <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; display: inline; vertical-align: middle; margin-left: 4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></a>
                 </div>
 
-                <div class="modal__image">
-                    <img id="modal-img" src="" alt="System workflow visualization">
+                <div class="modal-img-wrap">
+                    <img id="modal-img" src="" alt="">
                 </div>
 
-                <div class="modal__columns">
-                    <div class="modal__block">
-                        <h4>The Challenge</h4>
+                <div class="modal-two-col">
+                    <div class="modal-block">
+                        <h4 id="modal-h-story">The Challenge</h4>
                         <p id="modal-story"></p>
                     </div>
-                    <div class="modal__block modal__block--accent">
-                        <h4>The Solution</h4>
+                    <div class="modal-block accent" id="modal-block-intervention">
+                        <h4 id="modal-h-intervention">The Solution</h4>
                         <p id="modal-intervention"></p>
                     </div>
                 </div>
 
-                <div class="modal__block">
-                    <h4>Data Pipeline</h4>
+                <div class="modal-block" id="modal-block-workflow">
+                    <h4 id="modal-h-workflow">Data Pipeline</h4>
                     <div id="modal-workflow" class="pipeline"></div>
                 </div>
 
-                <div class="modal__block">
-                    <h4>Measured Impact</h4>
+                <div class="modal-block" id="modal-block-impact">
+                    <h4 id="modal-h-impact">Measured Impact</h4>
                     <div id="modal-impact" class="impact-list"></div>
                 </div>
 
-                <div class="modal__stack">
-                    <span class="modal__stack-label">STACK</span>
+                <div class="stack-row">
+                    <span class="stack-label">STACK</span>
                     <code id="modal-stack"></code>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="script.js" defer></script>
+    <script src="script.js"></script>
 </body>
 </html>

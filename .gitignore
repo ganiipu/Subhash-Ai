@@ -1,0 +1,18 @@
+# Python scripts used during development — not needed for deployment
+copy_images.py
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor folders
+.vscode/
+.idea/
+
+# Vercel build output (if any)
+.vercel/
+
+# Env files
+.env
+.env.local

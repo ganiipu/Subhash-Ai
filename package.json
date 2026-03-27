@@ -1,6 +1,13 @@
 {
-    "name": "ai-portfolio-subhash",
-    "version": "2.0.0",
-    "private": true,
-    "description": "AI Automation Project Portfolio — Subhash Pokhriyal"
+  "name": "subhash-ai-portfolio",
+  "version": "1.0.0",
+  "description": "Premium Animated AI Project Portfolio by Subhash Pokhriyal",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "keywords": ["ai", "portfolio", "n8n", "automation"],
+  "author": "Subhash Pokhriyal <pokhriyal.ccet@gmail.com>",
+  "license": "MIT"
 }

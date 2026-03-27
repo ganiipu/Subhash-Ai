@@ -1,75 +1,57 @@
-/* ===========================================
-   PORTFOLIO — CLEAN SCRIPT
-   =========================================== */
-
-// ─── Cursor Glow (smooth lerp follow) ──────
+// ===== CURSOR GLOW FOLLOWER =====
 const cursorGlow = document.getElementById('cursor-glow');
-let mx = 0, my = 0, gx = 0, gy = 0;
-
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+document.addEventListener('mousemove', e => {
+    cursorGlow.style.left = e.clientX + 'px';
+    cursorGlow.style.top = e.clientY + 'px';
+});
 document.addEventListener('mouseleave', () => { cursorGlow.style.opacity = '0'; });
 document.addEventListener('mouseenter', () => { cursorGlow.style.opacity = '1'; });
 
-function animateCursor() {
-    gx += (mx - gx) * 0.12;
-    gy += (my - gy) * 0.12;
-    cursorGlow.style.left = gx + 'px';
-    cursorGlow.style.top = gy + 'px';
-    requestAnimationFrame(animateCursor);
-}
-animateCursor();
-
-// ─── Neural Canvas ─────────────────────────
+// ===== NEURAL CANVAS =====
 const canvas = document.getElementById('neural-canvas');
 const ctx = canvas.getContext('2d');
-const NODE_COUNT = 60;
-const CONN_DIST = 140;
 let nodes = [];
+const N = 55;
 
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize);
+resize();
 
 class Node {
     constructor() { this.reset(); }
     reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.22;
-        this.vy = (Math.random() - 0.5) * 0.22;
-        this.r = Math.random() * 1.3 + 0.4;
-        this.alpha = Math.random() * 0.35 + 0.1;
+        this.vx = (Math.random() - 0.5) * 0.25;
+        this.vy = (Math.random() - 0.5) * 0.25;
+        this.r = Math.random() * 1.2 + 0.3;
+        this.a = Math.random() * 0.4 + 0.1;
     }
     update() {
-        this.x += this.vx;
-        this.y += this.vy;
+        this.x += this.vx; this.y += this.vy;
         if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
         if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
     }
     draw() {
-        ctx.fillStyle = `rgba(99,102,241,${this.alpha * 0.45})`;
+        ctx.fillStyle = `rgba(99,102,241,${this.a * 0.5})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
         ctx.fill();
     }
 }
 
-resizeCanvas();
-for (let i = 0; i < NODE_COUNT; i++) nodes.push(new Node());
-window.addEventListener('resize', resizeCanvas);
+for (let i = 0; i < N; i++) nodes.push(new Node());
 
 function drawCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < nodes.length; i++) {
-        nodes[i].update();
-        nodes[i].draw();
+        nodes[i].update(); nodes[i].draw();
         for (let j = i + 1; j < nodes.length; j++) {
             const dx = nodes[i].x - nodes[j].x;
             const dy = nodes[i].y - nodes[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < CONN_DIST) {
-                ctx.strokeStyle = `rgba(99,102,241,${0.04 * (1 - dist / CONN_DIST)})`;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            if (dist < 130) {
+                ctx.strokeStyle = `rgba(99,102,241,${0.05 * (1 - dist/130)})`;
                 ctx.lineWidth = 0.5;
                 ctx.beginPath();
                 ctx.moveTo(nodes[i].x, nodes[i].y);
@@ -82,83 +64,59 @@ function drawCanvas() {
 }
 drawCanvas();
 
-// ─── Typewriter ────────────────────────────
+// ===== TYPEWRITER =====
 const words = ['Portfolio', 'Intelligence', 'Automation', 'Engineering'];
+let wIdx = 0, cIdx = 0, deleting = false;
 const typeEl = document.getElementById('typewriter');
-let wordIdx = 0, charIdx = 0, deleting = false;
 
 function typeStep() {
-    const word = words[wordIdx];
+    const word = words[wIdx];
     if (!deleting) {
-        typeEl.textContent = word.slice(0, ++charIdx);
-        if (charIdx === word.length) {
-            deleting = true;
-            setTimeout(typeStep, 2200);
-            return;
-        }
+        typeEl.textContent = word.slice(0, ++cIdx);
+        if (cIdx === word.length) { deleting = true; setTimeout(typeStep, 2000); return; }
     } else {
-        typeEl.textContent = word.slice(0, --charIdx);
-        if (charIdx === 0) {
-            deleting = false;
-            wordIdx = (wordIdx + 1) % words.length;
-        }
+        typeEl.textContent = word.slice(0, --cIdx);
+        if (cIdx === 0) { deleting = false; wIdx = (wIdx + 1) % words.length; }
     }
-    setTimeout(typeStep, deleting ? 50 : 95);
+    setTimeout(typeStep, deleting ? 55 : 100);
 }
-setTimeout(typeStep, 1200);
+setTimeout(typeStep, 1000);
 
-// ─── GSAP & ScrollTrigger ──────────────────
+// ===== GSAP =====
 gsap.registerPlugin(ScrollTrigger);
 
-document.querySelectorAll('.section-title').forEach(el => {
-    gsap.from(el, {
-        scrollTrigger: { trigger: el, start: 'top 85%', once: true },
-        y: 35, opacity: 0, duration: 0.8, ease: 'power3.out'
-    });
-});
-
-document.querySelectorAll('.section-tag').forEach(el => {
-    gsap.from(el, {
-        scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-        x: -20, opacity: 0, duration: 0.6, ease: 'power2.out'
-    });
-});
-
-// ─── Animated Counters (eased) ─────────────
-function animateCounter(el) {
+// ===== ANIMATED COUNTERS =====
+function animCounter(el) {
     const target = parseInt(el.dataset.target);
     if (isNaN(target)) return;
-    const duration = 1200;
-    const start = performance.now();
-    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-    function tick(now) {
-        const progress = Math.min((now - start) / duration, 1);
-        el.textContent = Math.floor(easeOutCubic(progress) * target);
-        if (progress < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
+    let cur = 0;
+    const inc = target / 60;
+    const t = setInterval(() => {
+        cur = Math.min(cur + inc, target);
+        el.textContent = Math.floor(cur);
+        if (cur >= target) clearInterval(t);
+    }, 18);
 }
 
-// Run hero counters
+// Run hero counters with delay
 setTimeout(() => {
-    document.querySelectorAll('.stat__value[data-target]').forEach(animateCounter);
-}, 1000);
+    document.querySelectorAll('.hstat-num[data-target]').forEach(animCounter);
+}, 900);
 
-// ─── Scroll Reveal (IntersectionObserver) ──
-const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+// ===== SCROLL REVEAL VIA INTERSECTIONOBSERVER =====
+const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
-            const delay = parseInt(entry.target.dataset.delay) || 0;
             setTimeout(() => {
                 entry.target.classList.add('visible');
-                if (entry.target.dataset.target) animateCounter(entry.target);
-            }, delay);
-            revealObserver.unobserve(entry.target);
+                if (entry.target.dataset.target) animCounter(entry.target);
+            }, (entry.target.dataset.delay || 0));
+            revealObs.unobserve(entry.target);
         }
     });
-}, { threshold: 0.12 });
+}, { threshold: 0.15 });
 
-// ─── Project Data ──────────────────────────
+// ===== PROJECT DATA =====
 const projects = [
     {
         id: 1,
@@ -294,97 +252,203 @@ const projects = [
     }
 ];
 
-// ─── Render Project Cards ──────────────────
-const grid = document.getElementById('systems-grid');
-
-projects.forEach((project, index) => {
-    const num = String(index + 1).padStart(2, '0');
-    const tagHTML = project.tags.map(t => `<span class="ctag">${t}</span>`).join('');
-
-    const card = document.createElement('article');
-    card.className = 'sys-card';
-    card.dataset.id = project.id;
-    card.dataset.delay = index * 100;
-    card.setAttribute('role', 'button');
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-label', `View case study: ${project.title}`);
-
-    card.innerHTML = `
-        <div class="card-img">
-            <img src="${project.image}" alt="${project.title} workflow visualization" loading="lazy">
-        </div>
-        <div class="card-body">
-            <div class="card-meta">
-                <span class="card-num">SYS_${num}</span>
-                <span class="card-badge">${project.badge}</span>
+// ===== RENDER CARDS =====
+function renderGrid(dataArray, gridId) {
+    const gridEl = document.getElementById(gridId);
+    if (!gridEl) return;
+    dataArray.forEach((p, i) => {
+        const num = String(i + 1).padStart(2, '0');
+        const prefix = p.type === 'llm' ? 'LLM' : 'SYS';
+        const tags = p.tags.map(t => `<span class="ctag">${t}</span>`).join('');
+        const el = document.createElement('div');
+        el.className = 'sys-card';
+        el.dataset.id = p.id;
+        el.dataset.delay = i * 80;
+        el.innerHTML = `
+            <div class="card-img">
+                <img src="${p.image}" alt="${p.title}">
             </div>
-            <h3>${project.title}</h3>
-            <p class="card-sub">${project.subtitle}</p>
-            <div class="card-tags">${tagHTML}</div>
-            <div class="card-cta">
-                Open Case Study
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <div class="card-body">
+                <div class="card-meta">
+                    <span class="card-num">${prefix}_${num}</span>
+                    <span class="card-badge">${p.badge}</span>
+                </div>
+                <h3>${p.title}</h3>
+                <p class="card-sub">${p.subtitle}</p>
+                <div class="card-tags">${tags}</div>
+                <div class="card-cta">
+                    Open Case Study
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
             </div>
-        </div>
-    `;
+        `;
+        gridEl.appendChild(el);
+        revealObs.observe(el);
+    });
+}
 
-    grid.appendChild(card);
-    revealObserver.observe(card);
-});
+// ===== LLM PROJECTS DATA =====
+const llmProjects = [
+    {
+        id: 7,
+        type: 'llm',
+        title: "Text Emotion & Sentiment Analysis",
+        badge: "NLP CLASSIFICATION",
+        subtitle: "Fine‑tuned a BERT model to understand text emotion and sentiment.",
+        tags: ["BERT", "NLP", "Emotion AI"],
+        story: "Fine‑tuned a BERT model to understand text emotion and sentiment, identifying feelings like love, joy, anger, sadness, and fear. The model interprets contextual meaning to detect emotion with high accuracy in natural language.",
+        impact: [
+            "Fine‑tuned BERT for multi‑class emotion classification",
+            "Preprocessed and labeled custom emotion datasets",
+            "Optimized model for balanced performance and interpretability"
+        ],
+        workflow: ["Social media emotion tracking, feedback analytics, wellness or relationship chatbots, and brand sentiment monitoring."],
+        intervention: "Input: “I absolutely love how supportive my friends have been lately.”\nOutput: Emotion → Love ❤️",
+        stack: "BERT → HuggingFace → Python",
+        image: "assets/llm1.png",
+        link: "https://sentimentalanalysis-f2gahq2gzxaypcaagpvpyr.streamlit.app/"
+    },
+    {
+        id: 8,
+        type: 'llm',
+        title: "Fake News Detection",
+        badge: "TEXT CLASSIFICATION",
+        subtitle: "Fine‑tuned TinyBERT model to detect misinformation in news content.",
+        tags: ["TinyBERT", "NLP", "Transformers"],
+        story: "Fine‑tuned TinyBERT model and compared multiple compact transformer models to detect misinformation in news content. Focused on resource efficiency and inference speed.",
+        impact: [
+            "Benchmarked accuracy vs. latency across BERT variants",
+            "Built balanced fake vs. real news datasets",
+            "Optimized for mobile and real‑time moderation systems"
+        ],
+        workflow: ["News verification, social media moderation, cybersecurity content filters."],
+        intervention: null,
+        stack: "TinyBERT → PyTorch → Python",
+        image: "assets/llm2.png",
+        link: "https://fake-news-detector-ixryga3b2upsgtlajxcgmg.streamlit.app/"
+    },
+    {
+        id: 9,
+        type: 'llm',
+        title: "Restaurant Query NER System",
+        badge: "NAMED ENTITY RECOGNITION",
+        subtitle: "Built an NER model by fine‑tuning DistilBERT to extract structured entities.",
+        tags: ["DistilBERT", "NER", "NLP"],
+        story: "Built a Named Entity Recognition (NER) model by fine‑tuning DistilBERT to extract structured entities (cuisine, price, location) from natural language queries.",
+        impact: [
+            "Custom tagging schema for restaurant‑related attributes",
+            "Integrated with search pipelines for smarter query understanding",
+            "Demonstrates domain adaptation for conversational AI"
+        ],
+        workflow: ["Food delivery platforms, chatbots, travel search assistants."],
+        intervention: null,
+        stack: "DistilBERT → HuggingFace",
+        image: "assets/llm3.png"
+    },
+    {
+        id: 10,
+        type: 'llm',
+        title: "Indian Food Image Classifier",
+        badge: "COMPUTER VISION",
+        subtitle: "Fine‑tuned Vision Transformer (ViT) on Indian food image datasets.",
+        tags: ["ViT", "Vision", "Transformers"],
+        story: "Fine‑tuned Vision Transformer (ViT) on Indian food image datasets to classify dishes accurately and assist visual‑based recommendation systems.",
+        impact: [
+            "Transfer learning on food‑specific image datasets",
+            "Improved accuracy over CNN baselines",
+            "Adaptable across visual quality inspection pipelines"
+        ],
+        workflow: ["Food recognition apps, nutrition analysis, hospitality tech."],
+        intervention: null,
+        stack: "Vision Transformer (ViT) → PyTorch",
+        image: "assets/llm4.png"
+    },
+    {
+        id: 11,
+        type: 'llm',
+        title: "Product Knowledge Assistant",
+        badge: "LLM FINE-TUNING",
+        subtitle: "Custom fine‑tuned the Phi‑2 LLM on product information and FAQs.",
+        tags: ["Phi-2", "QA", "Conversational AI"],
+        story: "Custom fine‑tuned the Phi‑2 LLM on product information, FAQs, and specification documents to answer user queries conversationally.",
+        impact: [
+            "Domain‑specific instruction tuning and prompt optimization",
+            "Fine‑tuned for factual QA and reasoning on structured product data",
+            "Built for scalable deployment in customer support systems"
+        ],
+        workflow: ["E‑commerce AI assistants, support chatbots, enterprise knowledge bases."],
+        intervention: null,
+        stack: "Phi-2 → HuggingFace",
+        image: "assets/llm5.png"
+    }
+];
 
-// Observe capability and metric cards
-document.querySelectorAll('.cap-card, .metric-card').forEach(el => revealObserver.observe(el));
-document.querySelectorAll('.metric-card__value[data-target]').forEach(el => revealObserver.observe(el));
+renderGrid(projects, 'systems-grid');
+renderGrid(llmProjects, 'llms-grid');
 
-// ─── 3D Card Tilt on Hover ─────────────────
-grid.addEventListener('mousemove', e => {
-    const card = e.target.closest('.sys-card');
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -3;
-    const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 3;
-    card.style.transform = `translateY(-8px) perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-});
+// observe strip and metric cards
+document.querySelectorAll('.strip-card, .metric-box').forEach(el => revealObs.observe(el));
+document.querySelectorAll('.mb-num[data-target]').forEach(el => revealObs.observe(el));
 
-document.querySelectorAll('.sys-card').forEach(card => {
-    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
-});
-
-// ─── Modal Logic ───────────────────────────
+// ===== MODAL =====
 const modal = document.getElementById('project-modal');
 const modalClose = document.getElementById('modal-close');
 
 function openModal(id) {
-    const p = projects.find(x => x.id === parseInt(id));
+    const intId = parseInt(id);
+    const p = projects.find(x => x.id === intId) || llmProjects.find(x => x.id === intId);
     if (!p) return;
+
+    // Adapt Modal Headers Based on Project Type
+    if (p.type === 'llm') {
+        document.getElementById('modal-h-story').textContent = 'Description';
+        document.getElementById('modal-h-impact').textContent = 'Highlights';
+        document.getElementById('modal-h-workflow').textContent = 'Use Cases';
+        
+        if (p.intervention) {
+            document.getElementById('modal-block-intervention').style.display = 'block';
+            document.getElementById('modal-h-intervention').textContent = 'Example';
+        } else {
+            document.getElementById('modal-block-intervention').style.display = 'none';
+        }
+    } else {
+        document.getElementById('modal-h-story').textContent = 'The Challenge';
+        document.getElementById('modal-h-impact').textContent = 'Measured Impact';
+        document.getElementById('modal-h-workflow').textContent = 'Data Pipeline';
+        document.getElementById('modal-block-intervention').style.display = 'block';
+        document.getElementById('modal-h-intervention').textContent = 'The Solution';
+    }
 
     document.getElementById('modal-badge').textContent = p.badge;
     document.getElementById('modal-title').textContent = p.title;
     document.getElementById('modal-subtitle').textContent = p.subtitle;
     document.getElementById('modal-img').src = p.image;
-    document.getElementById('modal-img').alt = p.title + ' workflow';
-
-    document.getElementById('modal-tags').innerHTML =
-        p.tags.map(t => `<span>${t}</span>`).join('');
-
+    document.getElementById('modal-tags').innerHTML = p.tags.map(t => `<span>${t}</span>`).join('');
     document.getElementById('modal-story').textContent = p.story;
-    document.getElementById('modal-intervention').textContent = p.intervention;
+    
+    // Live Link Logic
+    const linkEl = document.getElementById('modal-live-link');
+    if (p.link) {
+        linkEl.href = p.link;
+        linkEl.style.display = 'inline-block';
+    } else {
+        linkEl.style.display = 'none';
+    }
+    
+    if (p.intervention) {
+        document.getElementById('modal-intervention').innerText = p.intervention;
+    }
 
-    document.getElementById('modal-workflow').innerHTML = p.workflow.map((step, i) => `
+    document.getElementById('modal-workflow').innerHTML = p.workflow.map((s, i) => `
         <div class="pipeline-step">
-            <span class="step-n">${i + 1}</span>
-            <span class="step-t">${step}</span>
+            <span class="step-n">${p.type === 'llm' ? '→' : (i+1)}</span>
+            <span class="step-t">${s}</span>
         </div>
     `).join('');
 
     document.getElementById('modal-impact').innerHTML = p.impact.map(item => `
         <div class="impact-pill">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                <path d="M22 4L12 14.01l-3-3"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
             <span>${item}</span>
         </div>
     `).join('');
@@ -393,7 +457,6 @@ function openModal(id) {
 
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
-    modalClose.focus();
 }
 
 function closeModal() {
@@ -401,56 +464,33 @@ function closeModal() {
     document.body.style.overflow = '';
 }
 
-grid.addEventListener('click', e => {
+document.addEventListener('click', e => {
     const card = e.target.closest('.sys-card');
     if (card) openModal(card.dataset.id);
 });
 
-grid.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-        const card = e.target.closest('.sys-card');
-        if (card) { e.preventDefault(); openModal(card.dataset.id); }
-    }
-});
-
 modalClose.addEventListener('click', closeModal);
-modal.querySelector('.modal__backdrop').addEventListener('click', closeModal);
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-// ─── Smooth Scroll ─────────────────────────
+// ===== SMOOTH SCROLL =====
 document.getElementById('explore-btn').addEventListener('click', () => {
     document.getElementById('systems').scrollIntoView({ behavior: 'smooth' });
 });
 
-document.querySelectorAll('.nav__links a[href^="#"], .footer__links a[href^="#"]').forEach(link => {
-    link.addEventListener('click', e => {
+document.querySelectorAll('.nav-links a[href^="#"], footer a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
         e.preventDefault();
-        const target = document.querySelector(link.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth' });
     });
 });
 
-// ─── Theme Toggle ──────────────────────────
-const themeToggle = document.getElementById('theme-toggle');
-const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
-document.body.setAttribute('data-theme', savedTheme);
-
-themeToggle.addEventListener('click', () => {
-    const current = document.body.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
+// ===== THEME TOGGLE =====
+const themeBtn = document.getElementById('theme-toggle');
+document.body.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+themeBtn.addEventListener('click', () => {
+    const next = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     document.body.setAttribute('data-theme', next);
-    localStorage.setItem('portfolio-theme', next);
+    localStorage.setItem('theme', next);
 });
-
-// ─── Initialize Lucide Icons ───────────────
-function initLucide(retries) {
-    retries = retries || 30;
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    } else if (retries > 0) {
-        setTimeout(function() { initLucide(retries - 1); }, 200);
-    }
-}
-
-initLucide();
-window.addEventListener('load', function() { initLucide(); });
