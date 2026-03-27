@@ -7,113 +7,156 @@
     <meta name="description" content="Engineering autonomous ecosystems that eliminate operational friction and transform fragmented data into structured intelligence.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Cursor Glow Follower -->
-    <div class="cursor-glow" id="cursor-glow"></div>
+    <!-- ===== XP DESKTOP HERO ===== -->
+    <section class="xp-desktop" id="hero">
 
-    <!-- Neural Canvas -->
-    <canvas id="neural-canvas"></canvas>
-
-    <!-- Nav -->
-    <nav class="nav">
-        <div class="nav-inner">
-            <div class="nav-brand">
-                <a href="#hero" class="nav-logo">
-                    <span class="nav-name">Subhash Pokhriyal</span><span class="logo-dash">-AI.</span><span class="logo-portfolio">Portfolio</span>
-                </a>
-            </div>
-            <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#systems">Systems</a>
-                <a href="#metrics">Impact</a>
-                <a href="mailto:pokhriyal.ccet@gmail.com" class="nav-cta">Contact</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- ===== HERO ===== -->
-    <section class="hero" id="hero">
-        <div class="hero-inner">
-            <div class="hero-tag">
-                <span class="blink-dot"></span>
-                <span>AUTONOMOUS SYSTEMS ONLINE</span>
-            </div>
-
-            <h1 class="hero-title">
-                <span class="word-line">AI Project</span>
-                <span class="word-line accent-line">
-                    <span id="typewriter"></span><span class="type-cursor">|</span>
-                </span>
-            </h1>
-
-            <p class="hero-sub">Engineering autonomous ecosystems that eliminate operational friction and transform fragmented data into structured intelligence.</p>
-
-            <div class="hero-cta-row">
-                <button id="explore-btn" class="cta-primary">
-                    <span>Explore 6 Systems</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-                <a href="#metrics" class="cta-secondary">View Impact →</a>
-            </div>
-
-            <div class="hero-stats-row">
-                <div class="hstat">
-                    <span class="hstat-num" data-target="6">0</span>
-                    <span class="hstat-lbl">Systems</span>
-                </div>
-                <div class="hstat-div"></div>
-                <div class="hstat">
-                    <span class="hstat-num" data-target="85">0</span><span class="hstat-sfx">%</span>
-                    <span class="hstat-lbl">Automation</span>
-                </div>
-                <div class="hstat-div"></div>
-                <div class="hstat">
-                    <span class="hstat-num" data-target="200">0</span><span class="hstat-sfx">h</span>
-                    <span class="hstat-lbl">Saved / Week</span>
-                </div>
-                <div class="hstat-div"></div>
-                <div class="hstat">
-                    <span class="hstat-num" data-target="99">0</span><span class="hstat-sfx">%</span>
-                    <span class="hstat-lbl">Uptime</span>
-                </div>
-            </div>
+        <!-- Desktop Icons -->
+        <div class="desktop-icons">
+            <div class="desktop-icon"><div class="icon-img">💻</div><span class="icon-label">My Portfolio</span></div>
+            <div class="desktop-icon"><div class="icon-img">📁</div><span class="icon-label">AI Projects</span></div>
+            <div class="desktop-icon"><div class="icon-img">🐙</div><span class="icon-label">GitHub</span></div>
+            <div class="desktop-icon"><div class="icon-img">💼</div><span class="icon-label">LinkedIn</span></div>
+            <div class="desktop-icon"><div class="icon-img">💬</div><span class="icon-label">ChatGPT</span></div>
+            <div class="desktop-icon"><div class="icon-img">🚀</div><span class="icon-label">Antigravity</span></div>
+            <div class="desktop-icon"><div class="icon-img">🐍</div><span class="icon-label">Python</span></div>
+            <div class="desktop-icon"><div class="icon-img">⚙️</div><span class="icon-label">n8n</span></div>
+            <div class="desktop-icon"><div class="icon-img">🧠</div><span class="icon-label">LLM Models</span></div>
+            <div class="desktop-icon"><div class="icon-img">📊</div><span class="icon-label">Impact Metrics</span></div>
+            <div class="desktop-icon"><div class="icon-img">🤗</div><span class="icon-label">HuggingFace</span></div>
+            <div class="desktop-icon"><div class="icon-img">📧</div><span class="icon-label">Contact</span></div>
+            <div class="desktop-icon"><div class="icon-img">📋</div><span class="icon-label">PMP</span></div>
+            <div class="desktop-icon"><div class="icon-img">🏅</div><span class="icon-label">PSM-1</span></div>
+            <div class="desktop-icon"><div class="icon-img">✨</div><span class="icon-label">Google Gen AI</span></div>
+            <div class="desktop-icon"><div class="icon-img">🎯</div><span class="icon-label">Prompt Eng.</span></div>
         </div>
 
-        <div class="hero-scroll">
-            <div class="scroll-line"></div>
-            <span>Scroll</span>
+        <!-- XP Window -->
+        <div class="xp-window main-window">
+            <div class="win-titlebar">
+                <div class="win-title">
+                    <span class="win-title-icon">🤖</span>
+                    Subhash Pokhriyal — AI Portfolio
+                </div>
+                <div class="win-buttons">
+                    <div class="win-btn win-btn-min">_</div>
+                    <div class="win-btn win-btn-max">□</div>
+                    <div class="win-btn win-btn-close">✕</div>
+                </div>
+            </div>
+            <div class="win-menubar">
+                <span class="win-menu-item">File</span>
+                <span class="win-menu-item">Edit</span>
+                <span class="win-menu-item">View</span>
+                <span class="win-menu-item">Favorites</span>
+                <span class="win-menu-item">Tools</span>
+                <span class="win-menu-item">Help</span>
+            </div>
+            <div class="win-content">
+                <div class="portfolio-hero">
+                    <div class="xp-badge">🤖 AI AUTOMATION ENGINEER</div>
+                    <h1 class="hero-title">
+                        <span class="word-line">AI Project</span>
+                        <span class="word-line accent-line">
+                            <span id="typewriter"></span><span class="type-cursor">|</span>
+                        </span>
+                    </h1>
+                    <p class="hero-sub">Engineering autonomous ecosystems that eliminate operational friction and transform fragmented data into structured intelligence.</p>
+                    <div class="xp-cta-row">
+                        <button id="explore-btn" class="xp-btn primary">Explore 6 Systems →</button>
+                        <a href="#metrics" class="xp-btn">View Impact ↓</a>
+                        <a href="mailto:pokhriyal.ccet@gmail.com" class="xp-btn">Contact Me</a>
+                    </div>
+                    <div class="xp-stats">
+                        <div class="xp-stat"><div class="xp-stat-val"><span class="xp-stat-num" data-target="6">0</span></div><span class="xp-stat-lbl">Systems</span></div>
+                        <div class="xp-stat"><div class="xp-stat-val"><span class="xp-stat-num" data-target="85">0</span><span class="xp-stat-sfx">%</span></div><span class="xp-stat-lbl">Automation</span></div>
+                        <div class="xp-stat"><div class="xp-stat-val"><span class="xp-stat-num" data-target="200">0</span><span class="xp-stat-sfx">h</span></div><span class="xp-stat-lbl">Saved/Week</span></div>
+                        <div class="xp-stat"><div class="xp-stat-val"><span class="xp-stat-num" data-target="99">0</span><span class="xp-stat-sfx">%</span></div><span class="xp-stat-lbl">Uptime</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="win-statusbar">
+                <span class="status-section">✅ All Systems Online</span>
+                <span class="status-section">6 Deployed</span>
+                <span>Subhash Pokhriyal-AI.Portfolio</span>
+            </div>
         </div>
+
     </section>
 
-    <!-- ===== ABOUT STRIP ===== -->
-    <section class="about-strip" id="about">
-        <div class="strip-inner">
-            <div class="strip-cap">
-                <span class="section-label">CAPABILITIES</span>
-                <h2 class="reveal-text">What I Build</h2>
-            </div>
-            <div class="strip-cards">
-                <div class="strip-card reveal-card">
-                    <div class="sc-icon">
+    <!-- XP Taskbar -->
+    <div class="xp-taskbar">
+        <button class="start-btn">
+            <span class="win-logo">🪟</span> start
+        </button>
+        <div class="quick-launch">
+            <span class="ql-icon">🌐</span>
+            <span class="ql-icon">📧</span>
+            <span class="ql-icon">📁</span>
+        </div>
+        <div class="taskbar-windows">
+            <div class="taskbar-win active"><span>🤖</span> Subhash — AI Portfolio</div>
+        </div>
+        <div class="sys-tray">
+            <span class="sys-tray-icon">🔊</span>
+            <span class="sys-tray-icon">🛡️</span>
+            <span class="sys-tray-icon">📶</span>
+            <span class="xp-clock" id="xp-clock">10:45 PM</span>
+        </div>
+    </div>
+
+    <!-- ===== MARIO CAPABILITIES ===== -->
+    <section class="mario-section" id="about">
+
+        <!-- Pixel Clouds -->
+        <div class="px-cloud pc1"><div class="r1"></div><div class="r2"></div><div class="r3"></div></div>
+        <div class="px-cloud pc2"><div class="r1"></div><div class="r2"></div><div class="r3"></div></div>
+        <div class="px-cloud pc3"><div class="r1"></div><div class="r2"></div><div class="r3"></div></div>
+
+        <!-- Floating Coins -->
+        <div class="coin coin1"></div>
+        <div class="coin coin2"></div>
+        <div class="coin coin3"></div>
+        <div class="coin coin4"></div>
+        <div class="coin coin5"></div>
+
+        <!-- Section Header -->
+        <div class="mario-header">
+            <div class="mario-label">★ CAPABILITIES ★</div>
+            <h2 class="mario-title">What I Build</h2>
+        </div>
+
+        <!-- Question Block Cards -->
+        <div class="q-cards-row">
+            <div class="q-card">
+                <div class="q-mark">❓</div>
+                <div class="q-content">
+                    <div class="q-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                     </div>
                     <h3>Workflow Architecture</h3>
                     <p>n8n-powered autonomous pipelines that process, decide, and act — no human required.</p>
                 </div>
-                <div class="strip-card reveal-card">
-                    <div class="sc-icon">
+            </div>
+            <div class="q-card">
+                <div class="q-mark">❓</div>
+                <div class="q-content">
+                    <div class="q-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 8v4l3 3"/></svg>
                     </div>
                     <h3>LLM Integration</h3>
                     <p>Embed GPT-4, Claude, and open models directly into real business logic and decision trees.</p>
                 </div>
-                <div class="strip-card reveal-card">
-                    <div class="sc-icon">
+            </div>
+            <div class="q-card">
+                <div class="q-mark">❓</div>
+                <div class="q-content">
+                    <div class="q-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
                     </div>
                     <h3>Impact at Scale</h3>
@@ -121,22 +164,59 @@
                 </div>
             </div>
         </div>
+
+        <!-- MARIO Character -->
+        <div class="mario-char">
+            <div class="mario-hat"></div>
+            <div class="mario-face"></div>
+            <div class="mario-shirt"></div>
+            <div class="mario-legs">
+                <div><div class="mario-leg"></div><div class="mario-boot"></div></div>
+                <div><div class="mario-leg"></div><div class="mario-boot"></div></div>
+            </div>
+        </div>
+
+        <!-- KOOPA TURTLE -->
+        <div class="koopa">
+            <div class="koopa-head"></div>
+            <div class="koopa-body"></div>
+            <div class="koopa-feet">
+                <div class="koopa-foot"></div>
+                <div class="koopa-foot"></div>
+            </div>
+        </div>
+
+        <!-- GOOMBA -->
+        <div class="goomba">
+            <div class="goomba-head"></div>
+            <div class="goomba-body"></div>
+            <div class="goomba-feet">
+                <div class="goomba-ft"></div>
+                <div class="goomba-ft"></div>
+            </div>
+        </div>
+
+        <!-- Green Pipes -->
+        <div class="m-pipe m-pipe-left">
+            <div class="m-pipe-top"></div>
+            <div class="m-pipe-stem"></div>
+        </div>
+        <div class="m-pipe m-pipe-right">
+            <div class="m-pipe-top"></div>
+            <div class="m-pipe-stem"></div>
+        </div>
+
+        <!-- Ground -->
+        <div class="m-ground">
+            <div class="m-grass"></div>
+            <div class="m-bricks"></div>
+        </div>
+
     </section>
 
     <!-- ===== SYSTEMS GRID ===== -->
-    <section class="systems-section" id="systems">
-        <div class="systems-inner">
-            <div class="section-head">
-                <span class="section-label">DEPLOYED SYSTEMS</span>
-                <h2 class="reveal-text">Six Intelligence Engines</h2>
-                <p class="section-sub">Each system was engineered to defeat a specific operational bottleneck. Click to explore the full case study.</p>
-            </div>
-            <div class="systems-grid" id="systems-grid"></div>
-        </div>
-    </section>
-
     <!-- ===== LLM GRID ===== -->
-    <section class="systems-section" id="llms" style="padding-top: 0;">
+    <section class="systems-section" id="llms">
         <div class="systems-inner">
             <div class="section-head">
                 <span class="section-label">APPLIED RESEARCH</span>
@@ -144,6 +224,18 @@
                 <p class="section-sub">Fine-tuned transformers and foundational models adapted for highly specialized NLP and Vision tasks.</p>
             </div>
             <div class="systems-grid" id="llms-grid"></div>
+        </div>
+    </section>
+
+    <!-- ===== DEPLOYED SYSTEMS ===== -->
+    <section class="systems-section" id="systems" style="padding-top: 0;">
+        <div class="systems-inner">
+            <div class="section-head">
+                <span class="section-label">DEPLOYED SYSTEMS</span>
+                <h2 class="reveal-text">Six Intelligence Engines</h2>
+                <p class="section-sub">Each system was engineered to defeat a specific operational bottleneck. Click to explore the full case study.</p>
+            </div>
+            <div class="systems-grid" id="systems-grid"></div>
         </div>
     </section>
 

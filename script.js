@@ -1,68 +1,16 @@
-// ===== CURSOR GLOW FOLLOWER =====
-const cursorGlow = document.getElementById('cursor-glow');
-document.addEventListener('mousemove', e => {
-    cursorGlow.style.left = e.clientX + 'px';
-    cursorGlow.style.top = e.clientY + 'px';
-});
-document.addEventListener('mouseleave', () => { cursorGlow.style.opacity = '0'; });
-document.addEventListener('mouseenter', () => { cursorGlow.style.opacity = '1'; });
-
-// ===== NEURAL CANVAS =====
-const canvas = document.getElementById('neural-canvas');
-const ctx = canvas.getContext('2d');
-let nodes = [];
-const N = 55;
-
-function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-window.addEventListener('resize', resize);
-resize();
-
-class Node {
-    constructor() { this.reset(); }
-    reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.25;
-        this.vy = (Math.random() - 0.5) * 0.25;
-        this.r = Math.random() * 1.2 + 0.3;
-        this.a = Math.random() * 0.4 + 0.1;
-    }
-    update() {
-        this.x += this.vx; this.y += this.vy;
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-    }
-    draw() {
-        ctx.fillStyle = `rgba(99,102,241,${this.a * 0.5})`;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        ctx.fill();
-    }
+// ===== XP LIVE CLOCK =====
+function updateClock() {
+    const el = document.getElementById('xp-clock');
+    if (!el) return;
+    const now = new Date();
+    let h = now.getHours(), m = now.getMinutes();
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    el.textContent = h + ':' + String(m).padStart(2, '0') + ' ' + ampm;
 }
+updateClock();
+setInterval(updateClock, 1000);
 
-for (let i = 0; i < N; i++) nodes.push(new Node());
-
-function drawCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < nodes.length; i++) {
-        nodes[i].update(); nodes[i].draw();
-        for (let j = i + 1; j < nodes.length; j++) {
-            const dx = nodes[i].x - nodes[j].x;
-            const dy = nodes[i].y - nodes[j].y;
-            const dist = Math.sqrt(dx*dx + dy*dy);
-            if (dist < 130) {
-                ctx.strokeStyle = `rgba(99,102,241,${0.05 * (1 - dist/130)})`;
-                ctx.lineWidth = 0.5;
-                ctx.beginPath();
-                ctx.moveTo(nodes[i].x, nodes[i].y);
-                ctx.lineTo(nodes[j].x, nodes[j].y);
-                ctx.stroke();
-            }
-        }
-    }
-    requestAnimationFrame(drawCanvas);
-}
-drawCanvas();
 
 // ===== TYPEWRITER =====
 const words = ['Portfolio', 'Intelligence', 'Automation', 'Engineering'];
@@ -100,8 +48,8 @@ function animCounter(el) {
 
 // Run hero counters with delay
 setTimeout(() => {
-    document.querySelectorAll('.hstat-num[data-target]').forEach(animCounter);
-}, 900);
+    document.querySelectorAll('.xp-stat-num[data-target]').forEach(animCounter);
+}, 1200);
 
 // ===== SCROLL REVEAL VIA INTERSECTIONOBSERVER =====
 const revealObs = new IntersectionObserver((entries) => {
@@ -261,9 +209,18 @@ function renderGrid(dataArray, gridId) {
         const prefix = p.type === 'llm' ? 'LLM' : 'SYS';
         const tags = p.tags.map(t => `<span class="ctag">${t}</span>`).join('');
         const el = document.createElement('div');
-        el.className = 'sys-card';
+        el.className = 'sys-card' + (p.link ? ' island-card' : '');
         el.dataset.id = p.id;
         el.dataset.delay = i * 80;
+
+        // Live app button — only for cards with a link
+        const liveBtn = p.link ? `
+            <a class="card-live-btn" href="${p.link}" target="_blank" rel="noopener"
+               onclick="event.stopPropagation()">
+                🌐 Launch App
+            </a>
+        ` : '';
+
         el.innerHTML = `
             <div class="card-img">
                 <img src="${p.image}" alt="${p.title}">
@@ -276,9 +233,12 @@ function renderGrid(dataArray, gridId) {
                 <h3>${p.title}</h3>
                 <p class="card-sub">${p.subtitle}</p>
                 <div class="card-tags">${tags}</div>
-                <div class="card-cta">
-                    Open Case Study
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <div class="card-footer-row">
+                    <div class="card-cta">
+                        Open Case Study
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                    ${liveBtn}
                 </div>
             </div>
         `;

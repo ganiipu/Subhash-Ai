@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XP Island Demo — Subhash Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; overflow-x: hidden; background: #87CEEB; }
+
+/* ===== SKY HERO ===== */
+.hero {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #87CEEB 0%, #b8dff8 45%, #d4eef7 70%, #e8f4fb 85%, #b5cf8f 85%, #8bb058 90%, #6a9035 100%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Clouds */
+.cloud {
+    position: absolute;
+    background: white;
+    border-radius: 50px;
+    opacity: 0.85;
+    filter: blur(1px);
+    animation: drift linear infinite;
+}
+.cloud::before, .cloud::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+}
+.c1 { width: 180px; height: 55px; top: 12%; left: -200px; animation-duration: 55s; }
+.c1::before { width: 85px; height: 75px; top: -40px; left: 25px; }
+.c1::after  { width: 65px; height: 60px; top: -30px; left: 80px; }
+.c2 { width: 130px; height: 40px; top: 22%; left: -180px; animation-duration: 42s; animation-delay: -18s; opacity: 0.65; }
+.c2::before { width: 60px; height: 55px; top: -32px; left: 20px; }
+.c2::after  { width: 50px; height: 45px; top: -26px; left: 60px; }
+.c3 { width: 220px; height: 65px; top: 8%; left: -250px; animation-duration: 68s; animation-delay: -30s; opacity: 0.75; }
+.c3::before { width: 100px; height: 90px; top: -50px; left: 30px; }
+.c3::after  { width: 80px; height: 70px; top: -38px; left: 110px; }
+.c4 { width: 100px; height: 32px; top: 30%; left: 60%; animation-duration: 38s; animation-delay: -10s; opacity: 0.55; }
+.c4::before { width: 45px; height: 42px; top: -24px; left: 15px; }
+.c4::after  { width: 40px; height: 35px; top: -20px; left: 50px; }
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(calc(100vw + 300px)); } }
+
+/* NAV */
+.nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    padding: 0.75rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 2px 16px rgba(0,80,160,0.1);
+}
+.nav-brand {
+    font-weight: 800; font-size: 1rem;
+    color: #1a3a5c;
+    letter-spacing: 0.3px;
+}
+.nav-brand span { color: #4f46e5; }
+.nav-links { display: flex; gap: 1.5rem; align-items: center; }
+.nav-links a {
+    color: #1a3a5c; text-decoration: none;
+    font-size: 0.88rem; font-weight: 600;
+    transition: color 0.2s;
+}
+.nav-links a:hover { color: #4f46e5; }
+.nav-cta {
+    background: #4f46e5; color: #fff !important;
+    padding: 0.4rem 1.1rem; border-radius: 6px;
+    font-weight: 700 !important;
+}
+
+/* ===== 3D ISLAND ===== */
+.island-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    animation: float 4s ease-in-out infinite;
+}
+@keyframes float { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-18px); } }
+
+.island-svg {
+    width: 100%;
+    display: block;
+}
+
+/* Hero text */
+.hero-text {
+    position: relative; z-index: 10;
+    text-align: center;
+    padding-top: 130px;
+}
+.badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.9);
+    backdrop-filter: blur(8px);
+    border-radius: 999px;
+    padding: 0.3rem 1rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #2563eb;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+.hero-h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    color: #0f172a;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+    text-shadow: 0 2px 20px rgba(255,255,255,0.8);
+}
+.hero-h1 span {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed, #0ea5e9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.hero-sub {
+    font-size: 1.1rem;
+    color: #1e3a5f;
+    max-width: 540px;
+    margin: 0 auto 2rem;
+    line-height: 1.7;
+    text-shadow: 0 1px 8px rgba(255,255,255,0.7);
+    font-weight: 500;
+}
+.cta-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+    background: #4f46e5;
+    color: #fff;
+    border: none;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem; font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(79,70,229,0.4);
+    transition: all 0.25s;
+    font-family: 'Inter',sans-serif;
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(79,70,229,0.5); }
+.btn-secondary {
+    background: rgba(255,255,255,0.7);
+    color: #1a3a5c;
+    border: 1.5px solid rgba(255,255,255,0.9);
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem; font-weight: 600;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.25s;
+    font-family: 'Inter',sans-serif;
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.9); transform: translateY(-2px); }
+
+/* Stats row */
+.stats-row {
+    display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
+    margin-top: 3rem;
+    background: rgba(255,255,255,0.45);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.75);
+    border-radius: 14px;
+    padding: 1.2rem 2.5rem;
+    width: fit-content;
+    margin-left: auto; margin-right: auto;
+    box-shadow: 0 4px 24px rgba(0,80,180,0.1);
+}
+.stat { text-align: center; }
+.stat-num { font-size: 1.8rem; font-weight: 900; color: #4f46e5; display: block; }
+.stat-lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #334155; font-weight: 600; }
+.stat-div { width: 1px; background: rgba(0,0,0,0.1); align-self: stretch; }
+
+/* XP-style taskbar at bottom of demo */
+.taskbar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    height: 44px;
+    background: linear-gradient(180deg, #3a72d6 0%, #2563b0 40%, #1d5aad 60%, #2060bb 100%);
+    border-top: 1px solid #5aa0f0;
+    display: flex; align-items: center; padding: 0 8px;
+    gap: 4px;
+    box-shadow: 0 -2px 8px rgba(0,0,50,0.3);
+    z-index: 9999;
+}
+.start-btn {
+    background: linear-gradient(180deg, #5cbf2a, #3a9c0c);
+    border: 1px solid #2a7a06;
+    border-radius: 4px 10px 10px 4px;
+    padding: 4px 12px 4px 8px;
+    color: white; font-size: 0.87rem; font-weight: 800;
+    display: flex; align-items: center; gap: 5px;
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 4px rgba(0,0,0,0.4);
+    font-family: 'Tahoma', sans-serif;
+    letter-spacing: 0.3px;
+}
+.taskbar-clock {
+    margin-left: auto;
+    background: rgba(0,20,80,0.3);
+    border: 1px solid rgba(100,150,255,0.3);
+    border-radius: 3px;
+    padding: 2px 10px;
+    color: #e8f0ff;
+    font-size: 0.78rem;
+    font-family: 'Tahoma', sans-serif;
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-brand">Subhash Pokhriyal<span>-AI.</span>Portfolio</div>
+    <div class="nav-links">
+        <a href="#">About</a>
+        <a href="#">Systems</a>
+        <a href="#">Impact</a>
+        <a href="#" class="nav-cta">Contact</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <!-- Floating clouds -->
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+    <div class="cloud c4"></div>
+
+    <!-- Hero text -->
+    <div class="hero-text">
+        <div class="badge">🤖 AI Automation Engineer</div>
+        <h1 class="hero-h1">
+            Building AI That<br><span>Works While You Sleep</span>
+        </h1>
+        <p class="hero-sub">Engineering autonomous ecosystems that eliminate operational friction and transform fragmented data into structured intelligence.</p>
+        <div class="cta-row">
+            <button class="btn-primary">Explore 6 Systems →</button>
+            <button class="btn-secondary">View Impact ↓</button>
+        </div>
+        <div class="stats-row">
+            <div class="stat"><span class="stat-num">6</span><span class="stat-lbl">Systems</span></div>
+            <div class="stat-div"></div>
+            <div class="stat"><span class="stat-num">85%</span><span class="stat-lbl">Automation</span></div>
+            <div class="stat-div"></div>
+            <div class="stat"><span class="stat-num">200h</span><span class="stat-lbl">Saved/Week</span></div>
+            <div class="stat-div"></div>
+            <div class="stat"><span class="stat-num">99%</span><span class="stat-lbl">Uptime</span></div>
+        </div>
+    </div>
+
+    <!-- 3D Island SVG -->
+    <div class="island-wrapper">
+        <svg class="island-svg" viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+            <!-- Island shadow -->
+            <ellipse cx="350" cy="305" rx="260" ry="18" fill="rgba(0,0,0,0.12)" />
+            <!-- Island bottom rock -->
+            <ellipse cx="350" cy="265" rx="240" ry="58" fill="#5a7a2a"/>
+            <ellipse cx="350" cy="258" rx="228" ry="50" fill="#6b8f34"/>
+            <!-- Rock face sides -->
+            <path d="M110 258 Q90 280 115 295 Q200 310 350 312 Q500 310 585 295 Q610 280 590 258 Z" fill="#5a7a2a"/>
+            <!-- Top grass surface -->
+            <ellipse cx="350" cy="205" rx="235" ry="58" fill="#7db83a"/>
+            <ellipse cx="350" cy="198" rx="220" ry="50" fill="#8cc43e"/>
+            <!-- Grass highlight -->
+            <ellipse cx="310" cy="185" rx="160" ry="35" fill="#99d44a" opacity="0.6"/>
+            <!-- Tree 1 (left) -->
+            <rect x="168" y="120" width="10" height="55" fill="#6b4423" rx="2"/>
+            <ellipse cx="173" cy="110" rx="32" ry="28" fill="#3d8c27"/>
+            <ellipse cx="173" cy="105" rx="26" ry="22" fill="#4da32e"/>
+            <!-- Tree 2 (center-left) -->
+            <rect x="248" y="105" width="12" height="65" fill="#7a4f28" rx="2"/>
+            <ellipse cx="254" cy="93" rx="36" ry="32" fill="#348a22"/>
+            <ellipse cx="254" cy="87" rx="30" ry="26" fill="#42a82b"/>
+            <!-- Tree 3 (center) -->
+            <rect x="338" y="90" width="14" height="75" fill="#6b4423" rx="2"/>
+            <ellipse cx="345" cy="76" rx="42" ry="36" fill="#2d7d1e"/>
+            <ellipse cx="345" cy="70" rx="34" ry="30" fill="#3d9a27"/>
+            <!-- Tree 4 (center-right) -->
+            <rect x="430" y="108" width="12" height="62" fill="#7a4f28" rx="2"/>
+            <ellipse cx="436" cy="96" rx="34" ry="30" fill="#348a22"/>
+            <ellipse cx="436" cy="90" rx="28" ry="24" fill="#42a82b"/>
+            <!-- Tree 5 (right) -->
+            <rect x="508" y="118" width="10" height="52" fill="#6b4423" rx="2"/>
+            <ellipse cx="513" cy="108" rx="30" ry="26" fill="#3d8c27"/>
+            <ellipse cx="513" cy="103" rx="24" ry="20" fill="#4da32e"/>
+            <!-- Small house -->
+            <rect x="295" y="142" width="110" height="55" fill="#e8d5b0" rx="4"/>
+            <rect x="305" y="154" width="22" height="28" fill="#8b6914" rx="2"/>
+            <rect x="363" y="154" width="28" height="20" fill="#87ceeb" rx="2" opacity="0.8"/>
+            <polygon points="285,145 350,105 415,145" fill="#c0392b"/>
+            <polygon points="290,145 350,110 410,145" fill="#e74c3c"/>
+            <!-- Chimney -->
+            <rect x="368" y="110" width="14" height="30" fill="#b0855a" rx="1"/>
+            <!-- Window shine -->
+            <rect x="365" y="156" width="8" height="8" fill="white" opacity="0.5" rx="1"/>
+            <!-- Path on grass -->
+            <ellipse cx="350" cy="195" rx="20" ry="5" fill="#c8a96e" opacity="0.5"/>
+            <rect x="344" y="170" width="12" height="28" fill="#c8a96e" opacity="0.4" rx="3"/>
+        </svg>
+    </div>
+</section>
+
+<!-- XP Taskbar -->
+<div class="taskbar">
+    <button class="start-btn">
+        <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="none" stroke="white" stroke-width="1.5"/><path d="M10 5v10M5 10h10" stroke="white" stroke-width="1.5"/></svg>
+        start
+    </button>
+    <div class="taskbar-clock" id="clock">10:45 AM</div>
+</div>
+
+<script>
+function updateClock() {
+    const now = new Date();
+    let h = now.getHours(), m = now.getMinutes();
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    document.getElementById('clock').textContent = h + ':' + String(m).padStart(2,'0') + ' ' + ampm;
+}
+updateClock(); setInterval(updateClock, 1000);
+</script>
+</body>
+</html>

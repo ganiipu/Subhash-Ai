@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mario Capabilities Demo v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', sans-serif;
+    background: #5c94fc;
+    min-height: 100vh;
+    overflow-x: hidden;
+    image-rendering: auto;
+}
+
+.mario-section {
+    position: relative;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #5c94fc 0%, #87CEEB 50%, #92cc41 82%, #6a9035 100%);
+    padding: 5rem 2rem 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* ===== PIXEL CLOUDS ===== */
+.px-cloud {
+    position: absolute; z-index: 0;
+    animation: drift linear infinite;
+}
+.px-cloud div {
+    background: #fff;
+    position: absolute;
+}
+/* cloud shape from boxes */
+.px-cloud .r1 { width: 48px; height: 12px; top: 0; left: 16px; border-radius: 6px 6px 0 0; }
+.px-cloud .r2 { width: 80px; height: 12px; top: 12px; left: 0; border-radius: 4px; }
+.px-cloud .r3 { width: 64px; height: 8px; top: 24px; left: 8px; border-radius: 0 0 4px 4px; }
+.pc1 { width: 80px; top: 8%; left: -90px; animation-duration: 48s; }
+.pc2 { width: 80px; top: 20%; left: -90px; animation-duration: 36s; animation-delay: -12s; opacity: 0.8; }
+.pc3 { width: 80px; top: 12%; left: -90px; animation-duration: 55s; animation-delay: -28s; }
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(calc(100vw + 150px)); } }
+
+/* ===== FLOATING COINS ===== */
+.coin {
+    position: absolute;
+    width: 22px; height: 28px;
+    background: linear-gradient(135deg, #ffd700 0%, #f0b000 50%, #ffd700 100%);
+    border-radius: 50%;
+    border: 2px solid #b8860b;
+    z-index: 4;
+    animation: coinSpin 1.2s linear infinite, coinFloat 2.5s ease-in-out infinite;
+    box-shadow: inset -3px 0 0 rgba(0,0,0,0.15);
+}
+.coin::after {
+    content: '¢';
+    position: absolute;
+    font-size: 14px; font-weight: 900;
+    color: #b8860b;
+    top: 4px; left: 5px;
+}
+.coin1 { top: 30%; left: 12%; animation-delay: 0s; }
+.coin2 { top: 15%; right: 18%; animation-delay: -0.4s; }
+.coin3 { top: 38%; right: 8%; animation-delay: -0.8s; }
+.coin4 { top: 22%; left: 42%; animation-delay: -1.2s; }
+.coin5 { top: 35%; left: 65%; animation-delay: -0.6s; }
+@keyframes coinSpin {
+    0% { transform: scaleX(1); }
+    25% { transform: scaleX(0.2); }
+    50% { transform: scaleX(1); }
+    75% { transform: scaleX(0.2); }
+    100% { transform: scaleX(1); }
+}
+@keyframes coinFloat {
+    0%, 100% { margin-top: 0; }
+    50% { margin-top: -10px; }
+}
+
+/* ===== KOOPA TURTLE ===== */
+.koopa {
+    position: absolute;
+    bottom: 125px;
+    z-index: 8;
+    animation: koopaWalk 12s linear infinite;
+}
+.koopa-body {
+    width: 32px; height: 28px;
+    background: linear-gradient(180deg, #27ae60 0%, #1e8449 100%);
+    border-radius: 8px 8px 4px 4px;
+    border: 2px solid #145a32;
+    position: relative;
+}
+/* Shell pattern */
+.koopa-body::after {
+    content: '';
+    position: absolute;
+    width: 16px; height: 16px;
+    background: #f7dc6f;
+    border: 2px solid #d4a017;
+    border-radius: 50%;
+    top: 4px; left: 6px;
+}
+/* Koopa head */
+.koopa-head {
+    width: 18px; height: 16px;
+    background: #f0d9b5;
+    border: 2px solid #c8a87c;
+    border-radius: 50%;
+    position: absolute;
+    top: -10px; left: -4px;
+}
+.koopa-head::after {
+    content: '';
+    width: 4px; height: 4px;
+    background: #333;
+    border-radius: 50%;
+    position: absolute;
+    top: 4px; left: 3px;
+}
+/* Koopa feet */
+.koopa-feet {
+    display: flex; gap: 8px;
+    justify-content: center;
+}
+.koopa-foot {
+    width: 10px; height: 6px;
+    background: #f0d9b5;
+    border: 1px solid #c8a87c;
+    border-radius: 0 0 4px 4px;
+    animation: feetWalk 0.4s linear infinite alternate;
+}
+.koopa-foot:nth-child(2) { animation-delay: -0.2s; }
+@keyframes feetWalk {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-3px); }
+}
+@keyframes koopaWalk {
+    0% { left: -50px; transform: scaleX(1); }
+    48% { left: calc(100% + 50px); transform: scaleX(1); }
+    50% { left: calc(100% + 50px); transform: scaleX(-1); }
+    98% { left: -50px; transform: scaleX(-1); }
+    100% { left: -50px; transform: scaleX(1); }
+}
+
+/* ===== GOOMBA ===== */
+.goomba {
+    position: absolute;
+    bottom: 123px;
+    z-index: 7;
+    animation: goombaWalk 18s linear infinite;
+}
+.goomba-head {
+    width: 30px; height: 20px;
+    background: linear-gradient(180deg, #8b4513 0%, #a0522d 100%);
+    border-radius: 12px 12px 2px 2px;
+    border: 2px solid #5c3310;
+    position: relative;
+}
+.goomba-head::before, .goomba-head::after {
+    content: '';
+    position: absolute;
+    width: 6px; height: 5px;
+    background: white;
+    border-radius: 50%;
+    top: 6px;
+    border: 1px solid #333;
+}
+.goomba-head::before { left: 5px; }
+.goomba-head::after { right: 5px; }
+.goomba-body {
+    width: 22px; height: 8px;
+    background: #f0d9b5;
+    border: 1px solid #c8a87c;
+    border-radius: 0 0 4px 4px;
+    margin: 0 auto;
+}
+.goomba-feet {
+    display: flex; gap: 4px; justify-content: center;
+}
+.goomba-ft {
+    width: 10px; height: 5px;
+    background: #333;
+    border-radius: 0 0 4px 4px;
+    animation: feetWalk 0.35s linear infinite alternate;
+}
+.goomba-ft:nth-child(2) { animation-delay: -0.175s; }
+@keyframes goombaWalk {
+    0% { right: -40px; transform: scaleX(-1); }
+    48% { right: calc(100% + 40px); transform: scaleX(-1); }
+    50% { right: calc(100% + 40px); transform: scaleX(1); }
+    98% { right: -40px; transform: scaleX(1); }
+    100% { right: -40px; transform: scaleX(-1); }
+}
+
+/* ===== MARIO CHARACTER ===== */
+.mario-char {
+    position: absolute;
+    bottom: 123px;
+    left: 15%;
+    z-index: 9;
+    animation: marioJump 3s ease-in-out infinite;
+}
+.mario-hat {
+    width: 24px; height: 8px;
+    background: #e74c3c;
+    border-radius: 4px 12px 0 0;
+    margin-left: 2px;
+}
+.mario-face {
+    width: 20px; height: 14px;
+    background: #f0d9b5;
+    border-radius: 4px;
+    position: relative;
+    margin-left: 4px;
+}
+.mario-face::before {
+    content: '';
+    width: 4px; height: 4px;
+    background: #333;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px; right: 3px;
+}
+.mario-face::after {
+    content: '';
+    width: 8px; height: 6px;
+    background: #8b6914;
+    border-radius: 0 0 4px 4px;
+    position: absolute;
+    bottom: -2px; left: 2px;
+}
+.mario-shirt {
+    width: 26px; height: 12px;
+    background: #e74c3c;
+    border-radius: 2px;
+    position: relative;
+}
+.mario-shirt::before {
+    content: '';
+    width: 8px; height: 12px;
+    background: #2980b9;
+    position: absolute;
+    left: 9px; top: 0;
+    border-radius: 0 0 2px 2px;
+}
+.mario-legs {
+    display: flex; gap: 2px; justify-content: center;
+}
+.mario-leg {
+    width: 8px; height: 8px;
+    background: #2980b9;
+    border-radius: 0 0 3px 3px;
+}
+.mario-boot {
+    width: 10px; height: 5px;
+    background: #8b4513;
+    border-radius: 0 0 3px 3px;
+    margin-top: -1px;
+}
+@keyframes marioJump {
+    0%, 100% { transform: translateY(0); }
+    18% { transform: translateY(-80px); }
+    36% { transform: translateY(0); }
+}
+
+/* ===== SECTION HEADER ===== */
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    z-index: 10;
+    position: relative;
+}
+.section-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: #d4a017;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.5);
+    padding: 0.4rem 1.2rem;
+    border-radius: 4px;
+    border: 2px solid #d4a017;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+.section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 3px 3px 0 #333, 0 0 20px rgba(255,255,255,0.3);
+}
+
+/* ===== QUESTION BLOCK CARDS ===== */
+.cards-row {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    z-index: 10;
+    position: relative;
+    max-width: 1100px;
+}
+
+.q-card {
+    width: 240px;
+
+    background: linear-gradient(180deg, #f5c542 0%, #d4a017 100%);
+    border: 5px solid #8b6914;
+    border-radius: 6px;
+    position: relative;
+    animation: blockFloat 3s ease-in-out infinite;
+    cursor: pointer;
+    transition: all 0.15s;
+    box-shadow:
+        0 8px 0 #6b5210,
+        0 12px 24px rgba(0,0,0,0.3),
+        inset 0 3px 0 rgba(255,255,255,0.3),
+        inset 0 -3px 0 rgba(0,0,0,0.1);
+}
+.q-card:nth-child(2) { animation-delay: -1s; }
+.q-card:nth-child(3) { animation-delay: -2s; }
+
+/* Rivets/bolts on the block */
+.q-card::before {
+    content: '';
+    position: absolute;
+    top: 4px; left: 4px; right: 4px; bottom: 4px;
+    border: 2px solid rgba(139,105,20,0.4);
+    border-radius: 3px;
+    pointer-events: none;
+}
+
+@keyframes blockFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+}
+
+.q-card:hover {
+    transform: translateY(-24px) !important;
+    box-shadow:
+        0 20px 0 #6b5210,
+        0 24px 30px rgba(0,0,0,0.3),
+        inset 0 3px 0 rgba(255,255,255,0.3);
+}
+/* Coin pop on hover */
+.q-card:hover::after {
+    content: '🪙';
+    position: absolute;
+    top: -40px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    animation: coinPop 0.5s ease-out forwards;
+}
+@keyframes coinPop {
+    0% { opacity: 1; top: -10px; }
+    100% { opacity: 0; top: -60px; }
+}
+
+.q-mark {
+    text-align: center;
+    padding: 0.8rem 0 0.4rem;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1.8rem;
+    color: #8b6914;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+    user-select: none;
+}
+
+.q-content {
+    background: rgba(255,255,255,0.95);
+    border-radius: 0 0 2px 2px;
+    padding: 1.4rem;
+    margin: 0 3px 3px;
+    border-top: 3px solid #8b6914;
+    min-height: 130px;
+}
+
+.q-icon {
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 3px 8px rgba(79,70,229,0.3);
+}
+.q-icon svg { width: 20px; height: 20px; color: white; }
+
+.q-content h3 {
+    font-size: 1rem; font-weight: 800;
+    color: #1a1a2e; margin-bottom: 0.4rem;
+}
+.q-content p {
+    font-size: 0.85rem; color: #475569; line-height: 1.65;
+}
+
+/* ===== GROUND ===== */
+.ground {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 5;
+}
+.grass {
+    height: 10px;
+    background: #27ae60;
+    border-top: 3px solid #1e8449;
+}
+.bricks {
+    height: 110px;
+    background: #c0392b;
+    position: relative;
+    overflow: hidden;
+}
+.bricks::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px, transparent 24px,
+            #962c22 24px, #962c22 26px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px, transparent 48px,
+            #962c22 48px, #962c22 50px
+        );
+}
+.bricks::after {
+    content: '';
+    position: absolute;
+    top: 26px; left: 24px; right: 0; bottom: 0;
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px, transparent 48px,
+            #962c22 48px, #962c22 50px
+        );
+}
+
+/* ===== GREEN PIPES ===== */
+.pipe {
+    position: absolute;
+    bottom: 120px;
+    z-index: 6;
+}
+.pipe-left { left: 5%; }
+.pipe-right { right: 5%; }
+.pipe-top {
+    width: 64px; height: 24px;
+    background: linear-gradient(90deg, #27ae60, #2ecc71 30%, #27ae60 70%, #1e8449);
+    border: 3px solid #145a32;
+    border-radius: 4px 4px 0 0;
+    margin: 0 -5px;
+}
+.pipe-stem {
+    width: 54px; height: 45px;
+    background: linear-gradient(90deg, #27ae60, #2ecc71 30%, #27ae60 70%, #1e8449);
+    border-left: 3px solid #145a32;
+    border-right: 3px solid #145a32;
+}
+/* Pipe highlight */
+.pipe-top::after {
+    content: '';
+    position: absolute;
+    width: 6px; height: 16px;
+    background: rgba(255,255,255,0.25);
+    top: 3px; left: 12px;
+    border-radius: 2px;
+}
+
+/* ===== SCORE HUD ===== */
+.game-hud {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 12px 24px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.6rem;
+    color: #fff;
+    text-shadow: 2px 2px 0 #333;
+    display: flex; justify-content: space-between;
+    z-index: 100;
+    background: rgba(0,0,0,0.15);
+}
+.hud-item span { display: block; text-align: center; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<!-- Mario HUD -->
+<div class="game-hud">
+    <div class="hud-item">SUBHASH<span>003600</span></div>
+    <div class="hud-item">🪙×03</div>
+    <div class="hud-item">WORLD<span>1-1</span></div>
+    <div class="hud-item">TIME<span id="timer">285</span></div>
+</div>
+
+<section class="mario-section">
+
+    <!-- Pixel Clouds -->
+    <div class="px-cloud pc1"><div class="r1"></div><div class="r2"></div><div class="r3"></div></div>
+    <div class="px-cloud pc2"><div class="r1"></div><div class="r2"></div><div class="r3"></div></div>
+    <div class="px-cloud pc3"><div class="r1"></div><div class="r2"></div><div class="r3"></div></div>
+
+    <!-- Floating Coins -->
+    <div class="coin coin1"></div>
+    <div class="coin coin2"></div>
+    <div class="coin coin3"></div>
+    <div class="coin coin4"></div>
+    <div class="coin coin5"></div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+        <div class="section-label">★ CAPABILITIES ★</div>
+        <h2 class="section-title">What I Build</h2>
+    </div>
+
+    <!-- Question Block Cards -->
+    <div class="cards-row">
+        <div class="q-card">
+            <div class="q-mark">❓</div>
+            <div class="q-content">
+                <div class="q-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                </div>
+                <h3>Workflow Architecture</h3>
+                <p>n8n-powered autonomous pipelines that process, decide, and act — no human required.</p>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-mark">❓</div>
+            <div class="q-content">
+                <div class="q-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 8v4l3 3"/></svg>
+                </div>
+                <h3>LLM Integration</h3>
+                <p>Embed GPT-4, Claude, and open models directly into real business logic and decision trees.</p>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-mark">❓</div>
+            <div class="q-content">
+                <div class="q-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                </div>
+                <h3>Impact at Scale</h3>
+                <p>Every system ships with hard metrics — hours saved, error rates crushed, response times decimated.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MARIO Character -->
+    <div class="mario-char">
+        <div class="mario-hat"></div>
+        <div class="mario-face"></div>
+        <div class="mario-shirt"></div>
+        <div class="mario-legs">
+            <div><div class="mario-leg"></div><div class="mario-boot"></div></div>
+            <div><div class="mario-leg"></div><div class="mario-boot"></div></div>
+        </div>
+    </div>
+
+    <!-- KOOPA TURTLE -->
+    <div class="koopa">
+        <div class="koopa-head"></div>
+        <div class="koopa-body"></div>
+        <div class="koopa-feet">
+            <div class="koopa-foot"></div>
+            <div class="koopa-foot"></div>
+        </div>
+    </div>
+
+    <!-- GOOMBA -->
+    <div class="goomba">
+        <div class="goomba-head"></div>
+        <div class="goomba-body"></div>
+        <div class="goomba-feet">
+            <div class="goomba-ft"></div>
+            <div class="goomba-ft"></div>
+        </div>
+    </div>
+
+    <!-- Green Pipes -->
+    <div class="pipe pipe-left">
+        <div class="pipe-top"></div>
+        <div class="pipe-stem"></div>
+    </div>
+    <div class="pipe pipe-right">
+        <div class="pipe-top"></div>
+        <div class="pipe-stem"></div>
+    </div>
+
+    <!-- Ground -->
+    <div class="ground">
+        <div class="grass"></div>
+        <div class="bricks"></div>
+    </div>
+
+</section>
+
+<script>
+// Timer countdown
+let time = 285;
+const timerEl = document.getElementById('timer');
+setInterval(() => {
+    if (time > 0) time--;
+    timerEl.textContent = time;
+}, 1000);
+</script>
+</body>
+</html>
